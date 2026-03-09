@@ -1,8 +1,6 @@
-# GhostRights pages module
-```
+import streamlit as st
 
----
-
-### File 2
-**Path to type:**
-```
+def render():
+    st.title("👻 GhostRights")
+    st.subheader("Your content was stolen. GhostRights takes it back.")
+    st.info("Landing page coming soon.")
