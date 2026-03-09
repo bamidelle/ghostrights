@@ -1,12 +1,8 @@
 import streamlit as st
 
 def render():
-    st.title("👻 GhostRights — Login")
-    st.info("Login page coming soon.")
+    st.title("👻 GhostRights — Sign Up")
+    st.info("Signup page coming soon.")
 ```
 
 ---
-
-### File 4
-**Path to type:**
-```
