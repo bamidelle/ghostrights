@@ -1,1 +1,1 @@
-# GhostRights module
+# reports/__init__.py
