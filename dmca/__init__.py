@@ -1,1 +1,2 @@
-# GhostRights module
+# dmca/__init__.py
+```
