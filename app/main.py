@@ -1,17 +1,19 @@
 # ============================================================
 # GhostRights — Main App Entry Point
-# Run: streamlit run app/main.py
 # ============================================================
 
 import streamlit as st
 import os
 import sys
 
-# Add repo root to path so all modules resolve correctly
-# (Streamlit runs from app/ but database/, config/ etc are in root)
-sys.path.insert(0, os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..")
-))
+# --- Fix import paths ---
+_HERE  = os.path.dirname(os.path.abspath(__file__))
+_ROOT  = os.path.abspath(os.path.join(_HERE, ".."))
+_PAGES = os.path.join(_HERE, "pages")
+
+for _p in [_ROOT, _HERE, _PAGES]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -26,21 +28,19 @@ st.set_page_config(
 )
 
 # --- Import pages ---
-from pages import (
-    page_landing,
-    page_login,
-    page_signup,
-    page_dashboard,
-    page_upload_content,
-    page_detections,
-    page_takedowns,
-    page_monetization,
-    page_reports,
-    page_settings,
-    page_admin
-)
+from pages import page_landing
+from pages import page_login
+from pages import page_signup
+from pages import page_dashboard
+from pages import page_upload_content
+from pages import page_detections
+from pages import page_takedowns
+from pages import page_monetization
+from pages import page_reports
+from pages import page_settings
+from pages import page_admin
 
-# --- Session State Initialization ---
+# --- Session State ---
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 if "user" not in st.session_state:
@@ -51,11 +51,9 @@ if "current_page" not in st.session_state:
     st.session_state.current_page = "landing"
 
 
-# --- Router ---
 def router():
     page = st.session_state.current_page
 
-    # Public pages (no auth required)
     if not st.session_state.authenticated:
         if page == "login":
             page_login.render()
@@ -65,7 +63,6 @@ def router():
             page_landing.render()
         return
 
-    # Protected pages (auth required)
     with st.sidebar:
         render_sidebar()
 
@@ -92,9 +89,7 @@ def router():
 
 
 def render_sidebar():
-    """Render the main navigation sidebar."""
     st.markdown("## 👻 GhostRights")
-
     st.markdown("---")
 
     profile = st.session_state.profile or {}
@@ -105,25 +100,22 @@ def render_sidebar():
     st.markdown("### Navigation")
 
     nav_items = [
-        ("🏠", "Dashboard",     "dashboard"),
-        ("📁", "My Content",    "upload_content"),
-        ("🔍", "Detections",    "detections"),
-        ("⚔️",  "Takedowns",    "takedowns"),
-        ("💰", "Monetization",  "monetization"),
-        ("📊", "Reports",       "reports"),
-        ("⚙️",  "Settings",     "settings"),
+        ("🏠", "Dashboard",    "dashboard"),
+        ("📁", "My Content",   "upload_content"),
+        ("🔍", "Detections",   "detections"),
+        ("⚔️",  "Takedowns",   "takedowns"),
+        ("💰", "Monetization", "monetization"),
+        ("📊", "Reports",      "reports"),
+        ("⚙️",  "Settings",    "settings"),
     ]
 
     for icon, label, page_key in nav_items:
-        if st.button(
-            f"{icon} {label}",
-            key=f"nav_{page_key}",
-            use_container_width=True
-        ):
+        if st.button(f"{icon} {label}",
+                     key=f"nav_{page_key}",
+                     use_container_width=True):
             st.session_state.current_page = page_key
             st.rerun()
 
-    # Admin link
     if profile.get("is_admin"):
         st.markdown("---")
         if st.button("🔧 Admin Panel",
@@ -134,11 +126,10 @@ def render_sidebar():
     st.markdown("---")
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.authenticated = False
-        st.session_state.user = None
+        st.session_state.user  = None
         st.session_state.profile = None
         st.session_state.current_page = "landing"
         st.rerun()
 
 
-# --- Run App ---
 router()
