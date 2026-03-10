@@ -1,7 +1,5 @@
 import streamlit as st
 
 def render():
-    st.title("👻 GhostRights — Admin")
+    st.markdown("## 🔧 Admin Panel")
     st.info("Admin panel coming soon.")
-```
-
