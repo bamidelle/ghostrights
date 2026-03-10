@@ -5,6 +5,13 @@
 
 import streamlit as st
 import os
+import sys
+
+# Add repo root to path so all modules resolve correctly
+# (Streamlit runs from app/ but database/, config/ etc are in root)
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..")
+))
 
 # --- Page Configuration ---
 st.set_page_config(
