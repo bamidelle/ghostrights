@@ -4,11 +4,7 @@
 # ============================================================
 
 import streamlit as st
-from dotenv import load_dotenv
 import os
-
-# Load environment variables
-load_dotenv()
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -47,6 +43,7 @@ if "profile" not in st.session_state:
 if "current_page" not in st.session_state:
     st.session_state.current_page = "landing"
 
+
 # --- Router ---
 def router():
     page = st.session_state.current_page
@@ -79,7 +76,9 @@ def router():
         page_reports.render()
     elif page == "settings":
         page_settings.render()
-    elif page == "admin" and st.session_state.profile.get("is_admin"):
+    elif page == "admin" and \
+            st.session_state.profile and \
+            st.session_state.profile.get("is_admin"):
         page_admin.render()
     else:
         page_dashboard.render()
@@ -87,9 +86,7 @@ def router():
 
 def render_sidebar():
     """Render the main navigation sidebar."""
-    st.image("assets/images/logo.png", width=150) \
-        if os.path.exists("assets/images/logo.png") \
-        else st.markdown("## 👻 GhostRights")
+    st.markdown("## 👻 GhostRights")
 
     st.markdown("---")
 
@@ -101,13 +98,13 @@ def render_sidebar():
     st.markdown("### Navigation")
 
     nav_items = [
-        ("🏠", "Dashboard", "dashboard"),
-        ("📁", "My Content", "upload_content"),
-        ("🔍", "Detections", "detections"),
-        ("⚔️", "Takedowns", "takedowns"),
-        ("💰", "Monetization", "monetization"),
-        ("📊", "Reports", "reports"),
-        ("⚙️", "Settings", "settings"),
+        ("🏠", "Dashboard",     "dashboard"),
+        ("📁", "My Content",    "upload_content"),
+        ("🔍", "Detections",    "detections"),
+        ("⚔️",  "Takedowns",    "takedowns"),
+        ("💰", "Monetization",  "monetization"),
+        ("📊", "Reports",       "reports"),
+        ("⚙️",  "Settings",     "settings"),
     ]
 
     for icon, label, page_key in nav_items:
@@ -122,7 +119,8 @@ def render_sidebar():
     # Admin link
     if profile.get("is_admin"):
         st.markdown("---")
-        if st.button("🔧 Admin Panel", use_container_width=True):
+        if st.button("🔧 Admin Panel",
+                     use_container_width=True):
             st.session_state.current_page = "admin"
             st.rerun()
 
@@ -136,5 +134,4 @@ def render_sidebar():
 
 
 # --- Run App ---
-if __name__ == "__main__":
-    router()
+router()
