@@ -12,8 +12,9 @@ _ROOT     = os.path.abspath(os.path.join(_HERE, ".."))
 _PAGES    = os.path.join(_HERE, "pages")
 _PAYMENTS = os.path.join(_ROOT, "payments")
 _DMCA     = os.path.join(_ROOT, "dmca")
+_REPORTS  = os.path.join(_ROOT, "reports")
 
-for _p in [_ROOT, _HERE, _PAGES, _PAYMENTS, _DMCA]:
+for _p in [_ROOT, _HERE, _PAGES, _PAYMENTS, _DMCA, _REPORTS]:
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
