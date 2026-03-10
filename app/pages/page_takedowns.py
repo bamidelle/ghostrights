@@ -1,8 +1,5 @@
 import streamlit as st
 
 def render():
-    st.title("👻 GhostRights — Takedowns")
+    st.markdown("## ⚔️ Takedowns")
     st.info("Takedowns page coming soon.")
-```
-
----
