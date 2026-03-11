@@ -32,19 +32,28 @@ st.set_page_config(
 )
 
 # --- Import pages ---
-from views import page_landing
-from views import page_login
-from views import page_signup
-from views import page_dashboard
-from views import page_upload_content
-from views import page_detections
-from views import page_takedowns
-from views import page_monetization
-from views import page_reports
-from views import page_settings
-from views import page_admin
-from views import page_notifications
-from views import page_free_scan
+import importlib.util, os as _os
+
+def _load(name):
+    path = _os.path.join(_HERE, "views", f"{name}.py")
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod  = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+page_landing       = _load("page_landing")
+page_login         = _load("page_login")
+page_signup        = _load("page_signup")
+page_dashboard     = _load("page_dashboard")
+page_upload_content= _load("page_upload_content")
+page_detections    = _load("page_detections")
+page_takedowns     = _load("page_takedowns")
+page_monetization  = _load("page_monetization")
+page_reports       = _load("page_reports")
+page_settings      = _load("page_settings")
+page_admin         = _load("page_admin")
+page_notifications = _load("page_notifications")
+page_free_scan     = _load("page_free_scan")
 
 # --- Session State ---
 if "authenticated" not in st.session_state:
