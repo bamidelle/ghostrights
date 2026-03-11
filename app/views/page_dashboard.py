@@ -516,7 +516,6 @@ def _get_monthly_revenue(creator_id: str) -> int:
         response = supabase.table("detections") \
             .select("estimated_revenue_lost_ngn") \
             .eq("creator_id", creator_id) \
-            .eq("status", "monetized") \
             .execute()
 
         if not response.data:
