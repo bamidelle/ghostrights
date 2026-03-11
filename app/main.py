@@ -9,7 +9,7 @@ import sys
 # --- Fix import paths ---
 _HERE     = os.path.dirname(os.path.abspath(__file__))
 _ROOT     = os.path.abspath(os.path.join(_HERE, ".."))
-_PAGES    = os.path.join(_HERE, "pages")
+_PAGES    = os.path.join(_HERE, "views")
 _PAYMENTS = os.path.join(_ROOT, "payments")
 _DMCA     = os.path.join(_ROOT, "dmca")
 _REPORTS  = os.path.join(_ROOT, "reports")
@@ -32,19 +32,19 @@ st.set_page_config(
 )
 
 # --- Import pages ---
-from pages import page_landing
-from pages import page_login
-from pages import page_signup
-from pages import page_dashboard
-from pages import page_upload_content
-from pages import page_detections
-from pages import page_takedowns
-from pages import page_monetization
-from pages import page_reports
-from pages import page_settings
-from pages import page_admin
-from pages import page_notifications
-from pages import page_free_scan
+from views import page_landing
+from views import page_login
+from views import page_signup
+from views import page_dashboard
+from views import page_upload_content
+from views import page_detections
+from views import page_takedowns
+from views import page_monetization
+from views import page_reports
+from views import page_settings
+from views import page_admin
+from views import page_notifications
+from views import page_free_scan
 
 # --- Session State ---
 if "authenticated" not in st.session_state:
