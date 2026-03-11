@@ -1,1 +1,0 @@
-# GhostRights pages module
