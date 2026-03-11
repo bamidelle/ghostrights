@@ -35,7 +35,25 @@ st.set_page_config(
 import importlib.util, os as _os
 
 def _load(name):
-    path = _os.path.join(_HERE, "views", f"{name}.py")
+    # Try multiple path strategies to find views/ folder
+    candidates = [
+        _os.path.join(_HERE, "views", f"{name}.py"),
+        _os.path.join(_ROOT, "app", "views", f"{name}.py"),
+        _os.path.join(_os.getcwd(), "app", "views", f"{name}.py"),
+        _os.path.join(_os.getcwd(), "views", f"{name}.py"),
+    ]
+    path = None
+    for c in candidates:
+        if _os.path.exists(c):
+            path = c
+            break
+    if path is None:
+        raise FileNotFoundError(
+            f"Cannot find {name}.py\n"
+            f"Tried:\n" + "\n".join(candidates) +
+            f"\nCWD: {_os.getcwd()}\n"
+            f"_HERE: {_HERE}\n_ROOT: {_ROOT}"
+        )
     spec = importlib.util.spec_from_file_location(name, path)
     mod  = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
