@@ -503,7 +503,9 @@ def _get_platform_stats(creator_id: str) -> list:
 
 
 def _get_monthly_revenue(creator_id: str) -> int:
-    """Get total revenue recovered this month."""
+    """Get total estimated revenue lost this month from detections.
+    Uses estimated_revenue_lost_ngn since monetization_claims
+    is populated only when YouTube Content ID is live."""
     if not creator_id:
         return 0
     try:
@@ -511,10 +513,10 @@ def _get_monthly_revenue(creator_id: str) -> int:
         first_of_month = datetime.now().replace(
             day=1, hour=0, minute=0, second=0
         ).isoformat()
-        response = supabase.table("monetization_claims") \
-            .select("creator_share_ngn") \
+        response = supabase.table("detections") \
+            .select("estimated_revenue_lost_ngn") \
             .eq("creator_id", creator_id) \
-            .gte("created_at", first_of_month) \
+            .eq("status", "monetized") \
             .execute()
 
         if not response.data:
