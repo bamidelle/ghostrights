@@ -521,7 +521,7 @@ def _get_monthly_revenue(creator_id: str) -> int:
         if not response.data:
             return 0
         return sum(
-            r.get("creator_share_ngn", 0) for r in response.data
+            r.get("estimated_revenue_lost_ngn", 0) or 0 for r in response.data
         )
     except Exception:
         return 0
