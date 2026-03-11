@@ -44,6 +44,7 @@ from pages import page_reports
 from pages import page_settings
 from pages import page_admin
 from pages import page_notifications
+from pages import page_free_scan
 
 # --- Session State ---
 if "authenticated" not in st.session_state:
@@ -64,6 +65,8 @@ def router():
             page_login.render()
         elif page == "signup":
             page_signup.render()
+        elif page == "free_scan":
+            page_free_scan.render()
         else:
             page_landing.render()
         return
@@ -79,6 +82,8 @@ def router():
         page_detections.render()
     elif page == "notifications":
         page_notifications.render()
+    elif page == "free_scan":
+        page_free_scan.render()
     elif page == "takedowns":
         page_takedowns.render()
     elif page == "monetization":
