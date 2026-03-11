@@ -20,9 +20,9 @@ from datetime import datetime, timedelta
 
 # ── Config ────────────────────────────────────────────────────
 # Set these before running
-CREATOR_ID    = "PASTE-YOUR-SUPABASE-USER-ID-HERE"
-CREATOR_NAME  = "Emeka Okafor"
-CREATOR_EMAIL = "emeka@example.com"
+CREATOR_ID    = "2e70c730-b00b-488c-a99a-b48e2fec9841"
+CREATOR_NAME  = "Bami"
+CREATOR_EMAIL = "bellobamidelle@gmail.com"
 
 
 def _get_supabase():
