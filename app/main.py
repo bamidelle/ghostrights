@@ -33,26 +33,23 @@ st.set_page_config(
 
 # --- Import pages ---
 import importlib.util, os as _os
+from mobile_css import inject_mobile_css
 
 def _load(name):
-    # Try multiple path strategies to find views/ folder
-    candidates = [
-        _os.path.join(_HERE, "views", f"{name}.py"),
-        _os.path.join(_ROOT, "app", "views", f"{name}.py"),
-        _os.path.join(_os.getcwd(), "app", "views", f"{name}.py"),
-        _os.path.join(_os.getcwd(), "views", f"{name}.py"),
-    ]
-    path = None
-    for c in candidates:
-        if _os.path.exists(c):
-            path = c
-            break
-    if path is None:
+    path = _os.path.join(_HERE, "views", f"{name}.py")
+    if not _os.path.exists(path):
+        # List what actually exists to debug
+        try:
+            here_ls  = _os.listdir(_HERE)
+            views_path = _os.path.join(_HERE, "views")
+            views_ls = _os.listdir(views_path) if _os.path.exists(views_path) else ["FOLDER NOT FOUND"]
+        except Exception as ls_err:
+            here_ls = [str(ls_err)]
+            views_ls = []
         raise FileNotFoundError(
-            f"Cannot find {name}.py\n"
-            f"Tried:\n" + "\n".join(candidates) +
-            f"\nCWD: {_os.getcwd()}\n"
-            f"_HERE: {_HERE}\n_ROOT: {_ROOT}"
+            f"File not found: {path}\n"
+            f"_HERE contents: {here_ls}\n"
+            f"views/ contents: {views_ls}"
         )
     spec = importlib.util.spec_from_file_location(name, path)
     mod  = importlib.util.module_from_spec(spec)
@@ -85,6 +82,7 @@ if "current_page" not in st.session_state:
 
 
 def router():
+    inject_mobile_css()  # Global mobile CSS for all pages
     page = st.session_state.current_page
 
     if not st.session_state.authenticated:
