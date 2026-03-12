@@ -466,6 +466,49 @@ def render():
     }
     .stButton > button:hover { background: #333 !important; }
 
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+        .kl-nav { padding: 0 16px; height: 60px; }
+        .kl-nav-links { display: none !important; }
+        .kl-hero {
+            grid-template-columns: 1fr !important;
+            padding: 32px 16px 0 !important;
+            gap: 32px !important;
+        }
+        .kl-hero-h1 { font-size: 34px !important; letter-spacing:-1.5px !important; }
+        .kl-hero-sub { font-size: 15px !important; max-width: 100% !important; }
+        .kl-section { padding: 48px 16px !important; }
+        .kl-section-h2 { font-size: 30px !important; letter-spacing:-1px !important; }
+        .kl-section-sub { font-size: 15px !important; }
+        .kl-steps {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+        }
+        .kl-step { padding: 24px 20px !important; }
+        .kl-dark-section { padding: 48px 16px !important; }
+        .kl-dark-inner {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 32px !important;
+        }
+        .kl-dark-num { font-size: 36px !important; }
+        .kl-pricing-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+        }
+        .kl-plan { padding: 28px 24px !important; }
+        .kl-plan-price { font-size: 40px !important; }
+        .kl-scan-wrap { padding: 48px 16px !important; }
+        .kl-scan-form-card { padding: 24px 16px !important; border-radius:14px !important; }
+        .kl-footer { padding: 48px 16px 32px !important; }
+        .kl-footer-top { flex-direction: column !important; gap: 32px !important; }
+        .kl-platforms { padding: 16px !important; gap: 16px !important; }
+        .block-container { padding: 0 !important; }
+    }
+    @media (max-width: 480px) {
+        .kl-hero-h1 { font-size: 28px !important; }
+        .kl-dark-inner { grid-template-columns: 1fr !important; }
+    }
+
     /* ── FOOTER ── */
     .kl-footer {
         background: var(--dark2);
@@ -510,30 +553,23 @@ def render():
     """, unsafe_allow_html=True)
 
     # ── NAV ───────────────────────────────────────────────────
-    st.markdown("""
-    <div class="kl-nav">
-        <div class="kl-logo">👻 GhostRights</div>
-        <div class="kl-nav-links">
-            <a class="kl-nav-link" href="#">How It Works</a>
-            <a class="kl-nav-link" href="#">Pricing</a>
-            <a class="kl-nav-link" href="#">For Labels</a>
-        </div>
-        <div class="kl-nav-right">
-            <button class="kl-btn-outline" onclick="">Log in</button>
-            <button class="kl-btn-black" onclick="">Get a free scan</button>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Hidden Streamlit nav buttons
-    c1, c2, c3 = st.columns([8, 1, 1])
-    with c2:
-        if st.button("Log in", key="nav_login"):
+    nav1, nav2, nav3, nav4, nav5 = st.columns([3, 1.2, 1, 1.2, 1.5])
+    with nav1:
+        st.markdown('<div class="kl-logo" style="padding:18px 0 12px;">👻 GhostRights</div>',
+                    unsafe_allow_html=True)
+    with nav2:
+        st.markdown('<div style="padding-top:14px;"><a class="kl-nav-link" href="#how-it-works">How It Works</a></div>',
+                    unsafe_allow_html=True)
+    with nav3:
+        st.markdown('<div style="padding-top:14px;"><a class="kl-nav-link" href="#pricing">Pricing</a></div>',
+                    unsafe_allow_html=True)
+    with nav4:
+        if st.button("Log in →", key="nav_login"):
             st.session_state.current_page = "login"
             st.rerun()
-    with c3:
-        if st.button("Sign up", key="nav_signup"):
-            st.session_state.current_page = "signup"
+    with nav5:
+        if st.button("🔍 Free scan", key="nav_free_scan"):
+            st.session_state.current_page = "free_scan"
             st.rerun()
 
     # ── HERO ──────────────────────────────────────────────────
@@ -552,9 +588,8 @@ def render():
                 music, and videos — then makes pirates pay you,
                 or destroys them. Automatically.
             </p>
-            <div class="kl-hero-ctas">
-                <a class="kl-cta-black" href="#">Get a free scan</a>
-                <a class="kl-cta-text" href="#">See how it works →</a>
+            <div class="kl-hero-ctas" id="hero-ctas">
+                <span id="hero-cta-placeholder"></span>
             </div>
             <div class="kl-hero-trust">
                 <div class="kl-avatars">
@@ -613,6 +648,19 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
+    # ── HERO CTA BUTTONS (real Streamlit) ─────────────────────
+    _, hero_c1, hero_c2, _ = st.columns([1, 2, 2, 1])
+    with hero_c1:
+        if st.button("🔍 Get a free scan →", key="hero_free_scan",
+                     use_container_width=True):
+            st.session_state.current_page = "free_scan"
+            st.rerun()
+    with hero_c2:
+        if st.button("Create free account", key="hero_signup",
+                     use_container_width=True):
+            st.session_state.current_page = "signup"
+            st.rerun()
+
     # ── HOW IT WORKS ──────────────────────────────────────────
     st.markdown("""
     <div class="kl-section">
@@ -670,63 +718,6 @@ def render():
             <div class="kl-dark-stat">
                 <div class="kl-dark-num">94.7%</div>
                 <div class="kl-dark-label">Detection accuracy</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # ── PRICING ───────────────────────────────────────────────
-    st.markdown("""
-    <div class="kl-section">
-        <div class="kl-section-eyebrow">Pricing</div>
-        <h2 class="kl-section-h2">Pay once.<br>Earn forever.</h2>
-        <p class="kl-section-sub">
-            Every plan includes a free piracy scan.
-            No credit card required to start.
-        </p>
-        <div class="kl-pricing-grid">
-            <div class="kl-plan">
-                <div class="kl-plan-name">Starter</div>
-                <div class="kl-plan-price">₦8k</div>
-                <div class="kl-plan-period">per month</div>
-                <hr class="kl-plan-divider">
-                <ul class="kl-plan-features">
-                    <li><span class="kl-check">✓</span> Up to 5 content items</li>
-                    <li><span class="kl-check">✓</span> YouTube &amp; Facebook monitoring</li>
-                    <li><span class="kl-check">✓</span> Email alerts</li>
-                    <li><span class="kl-check">✓</span> DMCA takedowns</li>
-                    <li><span class="kl-check">✓</span> Monthly piracy report</li>
-                </ul>
-                <button class="kl-plan-btn">Get started →</button>
-            </div>
-            <div class="kl-plan featured">
-                <div class="kl-plan-badge">Most Popular</div>
-                <div class="kl-plan-name">Pro</div>
-                <div class="kl-plan-price">₦20k</div>
-                <div class="kl-plan-period">per month</div>
-                <hr class="kl-plan-divider">
-                <ul class="kl-plan-features">
-                    <li><span class="kl-check">✓</span> Up to 25 content items</li>
-                    <li><span class="kl-check">✓</span> All 7 platforms monitored</li>
-                    <li><span class="kl-check">✓</span> WhatsApp + email alerts</li>
-                    <li><span class="kl-check">✓</span> Ad revenue monetisation</li>
-                    <li><span class="kl-check">✓</span> Watermark leak tracing</li>
-                </ul>
-                <button class="kl-plan-btn">Get Pro →</button>
-            </div>
-            <div class="kl-plan">
-                <div class="kl-plan-name">Studio</div>
-                <div class="kl-plan-price">₦75k</div>
-                <div class="kl-plan-period">per month</div>
-                <hr class="kl-plan-divider">
-                <ul class="kl-plan-features">
-                    <li><span class="kl-check">✓</span> Unlimited content items</li>
-                    <li><span class="kl-check">✓</span> All platforms + dark web</li>
-                    <li><span class="kl-check">✓</span> Dedicated account manager</li>
-                    <li><span class="kl-check">✓</span> PDF intelligence reports</li>
-                    <li><span class="kl-check">✓</span> Full API access</li>
-                </ul>
-                <button class="kl-plan-btn">Contact sales →</button>
             </div>
         </div>
     </div>
@@ -794,6 +785,126 @@ def render():
                 return
 
         st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── FREE SCAN ─────────────────────────────────────────────
+    st.markdown("""
+    <div class="kl-scan-wrap">
+        <div class="kl-scan-center">
+            <div class="kl-section-eyebrow">Free Piracy Scan</div>
+            <h2 class="kl-section-h2" style="font-size:42px;">
+                See who's stealing<br>your content right now.
+            </h2>
+            <p style="font-size:17px;color:#6B6B6B;line-height:1.6;font-weight:400;">
+                No credit card. No account needed.
+                Results in 60 seconds.
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    _, form_col, _ = st.columns([1, 2, 1])
+    with form_col:
+        st.markdown('<div class="kl-scan-form-card">', unsafe_allow_html=True)
+        st.markdown("""
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;
+             font-size:22px;font-weight:900;color:#111111;
+             letter-spacing:-0.5px;margin-bottom:28px;">
+            Run your free scan
+        </div>""", unsafe_allow_html=True)
+
+        st.markdown('<span class="kl-field-label">Your name</span>',
+                    unsafe_allow_html=True)
+        name = st.text_input("n", placeholder="e.g. Kunle Afolayan",
+                             label_visibility="collapsed", key="scan_name")
+
+        st.markdown('<span class="kl-field-label">Email address</span>',
+                    unsafe_allow_html=True)
+        email = st.text_input("e", placeholder="you@email.com",
+                              label_visibility="collapsed", key="scan_email")
+
+        st.markdown('<span class="kl-field-label">Content title</span>',
+                    unsafe_allow_html=True)
+        content_title = st.text_input("c",
+            placeholder="e.g. Living In Bondage, Essence",
+            label_visibility="collapsed", key="scan_title")
+
+        st.markdown('<span class="kl-field-label">Content type</span>',
+                    unsafe_allow_html=True)
+        content_type = st.selectbox("t",
+            ["Movie / Film", "Music Track", "YouTube Video",
+             "Podcast", "Album", "Short Film", "Other"],
+            label_visibility="collapsed", key="scan_type")
+
+        st.markdown("<div style='margin-top:28px;'></div>",
+                    unsafe_allow_html=True)
+
+        if st.button("Scan my content for free →", key="run_scan"):
+            if not name or not email or not content_title:
+                st.error("Please fill in all fields.")
+            else:
+                _save_scan_lead(name, email, content_title, content_type)
+                st.markdown('</div>', unsafe_allow_html=True)
+                _show_scan_results(content_title)
+                return
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── PRICING ───────────────────────────────────────────────
+    st.markdown("""
+    <div class="kl-section">
+        <div class="kl-section-eyebrow">Pricing</div>
+        <h2 class="kl-section-h2">Pay once.<br>Earn forever.</h2>
+        <p class="kl-section-sub">
+            Every plan includes a free piracy scan.
+            No credit card required to start.
+        </p>
+        <div class="kl-pricing-grid">
+            <div class="kl-plan">
+                <div class="kl-plan-name">Starter</div>
+                <div class="kl-plan-price">₦8k</div>
+                <div class="kl-plan-period">per month</div>
+                <hr class="kl-plan-divider">
+                <ul class="kl-plan-features">
+                    <li><span class="kl-check">✓</span> Up to 5 content items</li>
+                    <li><span class="kl-check">✓</span> YouTube &amp; Facebook monitoring</li>
+                    <li><span class="kl-check">✓</span> Email alerts</li>
+                    <li><span class="kl-check">✓</span> DMCA takedowns</li>
+                    <li><span class="kl-check">✓</span> Monthly piracy report</li>
+                </ul>
+                <button class="kl-plan-btn">Get started →</button>
+            </div>
+            <div class="kl-plan featured">
+                <div class="kl-plan-badge">Most Popular</div>
+                <div class="kl-plan-name">Pro</div>
+                <div class="kl-plan-price">₦20k</div>
+                <div class="kl-plan-period">per month</div>
+                <hr class="kl-plan-divider">
+                <ul class="kl-plan-features">
+                    <li><span class="kl-check">✓</span> Up to 25 content items</li>
+                    <li><span class="kl-check">✓</span> All 7 platforms monitored</li>
+                    <li><span class="kl-check">✓</span> WhatsApp + email alerts</li>
+                    <li><span class="kl-check">✓</span> Ad revenue monetisation</li>
+                    <li><span class="kl-check">✓</span> Watermark leak tracing</li>
+                </ul>
+                <button class="kl-plan-btn">Get Pro →</button>
+            </div>
+            <div class="kl-plan">
+                <div class="kl-plan-name">Studio</div>
+                <div class="kl-plan-price">₦75k</div>
+                <div class="kl-plan-period">per month</div>
+                <hr class="kl-plan-divider">
+                <ul class="kl-plan-features">
+                    <li><span class="kl-check">✓</span> Unlimited content items</li>
+                    <li><span class="kl-check">✓</span> All platforms + dark web</li>
+                    <li><span class="kl-check">✓</span> Dedicated account manager</li>
+                    <li><span class="kl-check">✓</span> PDF intelligence reports</li>
+                    <li><span class="kl-check">✓</span> Full API access</li>
+                </ul>
+                <button class="kl-plan-btn">Contact sales →</button>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # ── FOOTER ────────────────────────────────────────────────
     st.markdown("""
