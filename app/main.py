@@ -22,54 +22,6 @@ for _p in [_ROOT, _HERE, _PAGES, _PAYMENTS, _DMCA, _REPORTS, _ALERTS, _DATABASE]
 
 
 # --- Mobile CSS (inlined to avoid import issues) ---
-def inject_mobile_css():
-    import streamlit as _st
-    _st.markdown("""
-<style>
-@media (max-width: 768px) {
-    .block-container { padding: 0 16px 32px !important; }
-    .gr-topbar { flex-direction:column !important; align-items:flex-start !important; gap:12px !important; padding:20px 0 16px !important; margin-bottom:20px !important; }
-    .gr-topbar-left h2 { font-size:22px !important; }
-    .gr-logo-inline { display:none !important; }
-    .pg-header { padding:20px 0 16px !important; margin-bottom:20px !important; }
-    .pg-title { font-size:22px !important; letter-spacing:-0.5px !important; }
-    .gr-stat-card { padding:16px 18px !important; border-radius:12px !important; }
-    .gr-stat-value { font-size:28px !important; letter-spacing:-0.8px !important; }
-    .gr-stat-label { font-size:10px !important; }
-    .gr-detection-item { flex-direction:column !important; align-items:flex-start !important; gap:10px !important; padding:14px 16px !important; }
-    .det-card { padding:14px 16px !important; }
-    .det-title { font-size:14px !important; }
-    .det-url { font-size:11px !important; word-break:break-all !important; }
-    .notif-card { padding:14px 16px !important; }
-    .stButton > button { font-size:14px !important; padding:12px 20px !important; min-height:44px !important; }
-    .stTextInput input, .stTextArea textarea { font-size:16px !important; min-height:44px !important; }
-    .stTabs [data-baseweb="tab-list"] { flex-wrap:nowrap !important; overflow-x:auto !important; scrollbar-width:none !important; }
-    .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar { display:none !important; }
-    .stTabs [data-baseweb="tab"] { font-size:12px !important; padding:6px 12px !important; white-space:nowrap !important; }
-    .kl-hero-h1 { font-size:32px !important; letter-spacing:-1.2px !important; }
-    .kl-hero { padding:40px 16px 24px !important; }
-    .kl-feat-grid { grid-template-columns:1fr !important; }
-    .kl-pricing-grid { grid-template-columns:1fr !important; gap:16px !important; }
-    .kl-nav-links { display:none !important; }
-    .fs-h1 { font-size:28px !important; letter-spacing:-1px !important; }
-    .fs-scan-wrap { padding:24px 20px !important; border-radius:16px !important; margin:0 0 32px !important; }
-    .fs-stat-row { flex-direction:column !important; }
-    .fs-stat-item { border-right:none !important; border-bottom:1px solid #2A2A2A !important; padding:14px 0 !important; }
-    .fs-stat-item:last-child { border-bottom:none !important; }
-    .fs-proof-grid { grid-template-columns:1fr !important; }
-    .fs-cta-box { padding:24px 20px !important; }
-    div[data-testid="stSidebar"] .stButton > button { padding:14px 16px !important; font-size:15px !important; min-height:48px !important; }
-    [data-testid="stHorizontalBlock"] { flex-wrap:wrap !important; gap:8px !important; }
-    [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] { min-width:calc(50% - 4px) !important; flex:1 1 calc(50% - 4px) !important; }
-    html, body { overflow-x:hidden !important; max-width:100vw !important; }
-}
-@media (max-width: 480px) {
-    .block-container { padding: 0 12px 24px !important; }
-    .kl-hero-h1 { font-size:26px !important; }
-    [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] { min-width:100% !important; flex:1 1 100% !important; }
-}
-</style>
-""", unsafe_allow_html=True)
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -133,7 +85,6 @@ if "current_page" not in st.session_state:
 
 
 def router():
-    inject_mobile_css()
     page = st.session_state.current_page
 
     if not st.session_state.authenticated:
