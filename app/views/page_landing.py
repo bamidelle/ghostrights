@@ -815,30 +815,30 @@ def render():
         st.markdown('<span class="kl-field-label">Your name</span>',
                     unsafe_allow_html=True)
         name = st.text_input("n", placeholder="e.g. Kunle Afolayan",
-                             label_visibility="collapsed", key="scan_name")
+                             label_visibility="collapsed", key="scan_name2")
 
         st.markdown('<span class="kl-field-label">Email address</span>',
                     unsafe_allow_html=True)
         email = st.text_input("e", placeholder="you@email.com",
-                              label_visibility="collapsed", key="scan_email")
+                              label_visibility="collapsed", key="scan_email2")
 
         st.markdown('<span class="kl-field-label">Content title</span>',
                     unsafe_allow_html=True)
         content_title = st.text_input("c",
             placeholder="e.g. Living In Bondage, Essence",
-            label_visibility="collapsed", key="scan_title")
+            label_visibility="collapsed", key="scan_title2")
 
         st.markdown('<span class="kl-field-label">Content type</span>',
                     unsafe_allow_html=True)
         content_type = st.selectbox("t",
             ["Movie / Film", "Music Track", "YouTube Video",
              "Podcast", "Album", "Short Film", "Other"],
-            label_visibility="collapsed", key="scan_type")
+            label_visibility="collapsed", key="scan_type2")
 
         st.markdown("<div style='margin-top:28px;'></div>",
                     unsafe_allow_html=True)
 
-        if st.button("Scan my content for free →", key="run_scan"):
+        if st.button("Scan my content for free →", key="run_scan2"):
             if not name or not email or not content_title:
                 st.error("Please fill in all fields.")
             else:
