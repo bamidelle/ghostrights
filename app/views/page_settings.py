@@ -54,6 +54,22 @@ def render():
     .stTabs [data-baseweb="tab"] { border-radius: 100px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; font-weight: 700 !important; font-size: 14px !important; color: #6B6B6B !important; border: none !important; background: transparent !important; }
     .stTabs [aria-selected="true"] { background: #111111 !important; color: #fff !important; }
     div[data-testid="stSidebar"] { background: #FFFFFF !important; border-right: 1px solid #E8E4DE !important; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        .block-container { padding: 0 12px 24px !important; }
+        .pg-header { padding:16px 0 12px !important; margin-bottom:16px !important; }
+        .pg-title { font-size:20px !important; }
+        .det-card { padding:12px 14px !important; }
+        .det-title { font-size:13px !important; }
+        .det-url { font-size:11px !important; word-break:break-all !important; }
+        .notif-card { padding:12px 14px !important; }
+        .notif-title { font-size:13px !important; }
+        .pref-card { padding:16px !important; }
+        .stTabs [data-baseweb="tab-list"] { overflow-x:auto !important; scrollbar-width:none !important; flex-wrap:nowrap !important; }
+        .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar { display:none !important; }
+        .stTabs [data-baseweb="tab"] { font-size:12px !important; padding:6px 10px !important; white-space:nowrap !important; }
+    }
     </style>
     """, unsafe_allow_html=True)
 
