@@ -40,11 +40,13 @@ div[data-testid="stSidebar"] { background:#FFFFFF !important; border-right:1px s
 """
 
 STATUS_CHIP = {
-    "new":                '🔴 <span class="chip chip-new">New</span>',
-    "takedown_requested": '⚔️ <span class="chip chip-dmca">DMCA Sent</span>',
-    "monetized":          '💰 <span class="chip chip-mon">Monetized</span>',
-    "dismissed":          '<span class="chip chip-done">Dismissed</span>',
-    "resolved":           '<span class="chip chip-done">Resolved</span>',
+    "new":          '🔴 <span class="chip chip-new">New</span>',
+    "confirmed":    '🔍 <span class="chip chip-new">Confirmed</span>',
+    "action_taken": '⚔️ <span class="chip chip-dmca">DMCA Sent</span>',
+    "monetized":    '💰 <span class="chip chip-mon">Monetized</span>',
+    "taken_down":   '✅ <span class="chip chip-done">Taken Down</span>',
+    "ignored":      '<span class="chip chip-done">Ignored</span>',
+    "disputed":     '<span class="chip chip-done">Disputed</span>',
 }
 PLATFORM_ICON = {
     "youtube":"▶️", "facebook":"📘", "telegram":"✈️",
@@ -70,8 +72,7 @@ def render():
     col1, col2, col3 = st.columns([2, 2, 1])
     with col1:
         status_filter = st.selectbox(
-            "Status", ["All", "New", "DMCA Sent",
-                       "Monetized", "Dismissed"],
+            "Status", ["All", "New", "DMCA Sent", "Monetized", "Dismissed"],
             label_visibility="collapsed", key="det_status"
         )
     with col2:
@@ -92,7 +93,7 @@ def render():
     tab_all, tab_new, tab_actioned = st.tabs([
         f"📋 All ({len(detections)})",
         f"🔴 New ({sum(1 for d in detections if d.get('status')=='new')})",
-        f"✅ Actioned ({sum(1 for d in detections if d.get('status') not in ['new',''])})",
+        f"✅ Actioned ({sum(1 for d in detections if d.get('status') not in ['new','confirmed',''])})",
     ])
 
     with tab_all:
@@ -148,8 +149,8 @@ def _render_card(det, creator_id):
     except Exception:
         det_date = detected[:10] if detected else ""
 
-    card_cls = "new-det" if status == "new" else \
-               "resolved" if status in ["resolved","dismissed"] else ""
+    card_cls = "new-det" if status in ["new","confirmed"] else \
+               "resolved" if status in ["taken_down","ignored","disputed"] else ""
 
     st.markdown(f"""
     <div class="det-card {card_cls}">
@@ -183,7 +184,7 @@ def _render_card(det, creator_id):
         with c3:
             if st.button("✕ Dismiss",
                          key=f"dismiss_{det_id}"):
-                _update_status(det_id, "dismissed")
+                _update_status(det_id, "ignored")
                 st.rerun()
 
 
@@ -200,9 +201,9 @@ def _get_detections(creator_id, status_filter,
 
         status_map = {
             "New":      "new",
-            "DMCA Sent":"takedown_requested",
+            "DMCA Sent":"action_taken",
             "Monetized":"monetized",
-            "Dismissed":"dismissed",
+            "Dismissed":"ignored",
         }
         if status_filter != "All" and \
                 status_filter in status_map:
