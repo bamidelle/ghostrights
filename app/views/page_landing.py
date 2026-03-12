@@ -467,46 +467,55 @@ def render():
     .stButton > button:hover { background: #333 !important; }
 
     /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 900px) {
+        .kl-hero {
+            grid-template-columns: 1fr !important;
+            padding: 40px 24px 0 !important;
+            gap: 40px !important;
+        }
+        .kl-steps { grid-template-columns: 1fr 1fr !important; }
+        .kl-dark-inner { grid-template-columns: 1fr 1fr !important; }
+        .kl-pricing-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+    }
     @media (max-width: 768px) {
         .kl-nav { padding: 0 16px; height: 60px; }
         .kl-nav-links { display: none !important; }
-        .kl-hero {
-            grid-template-columns: 1fr !important;
-            padding: 32px 16px 0 !important;
-            gap: 32px !important;
-        }
-        .kl-hero-h1 { font-size: 34px !important; letter-spacing:-1.5px !important; }
-        .kl-hero-sub { font-size: 15px !important; max-width: 100% !important; }
-        .kl-section { padding: 48px 16px !important; }
-        .kl-section-h2 { font-size: 30px !important; letter-spacing:-1px !important; }
-        .kl-section-sub { font-size: 15px !important; }
-        .kl-steps {
-            grid-template-columns: 1fr !important;
-            gap: 12px !important;
-        }
-        .kl-step { padding: 24px 20px !important; }
-        .kl-dark-section { padding: 48px 16px !important; }
-        .kl-dark-inner {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 32px !important;
-        }
-        .kl-dark-num { font-size: 36px !important; }
-        .kl-pricing-grid {
-            grid-template-columns: 1fr !important;
-            gap: 16px !important;
-        }
-        .kl-plan { padding: 28px 24px !important; }
-        .kl-plan-price { font-size: 40px !important; }
-        .kl-scan-wrap { padding: 48px 16px !important; }
-        .kl-scan-form-card { padding: 24px 16px !important; border-radius:14px !important; }
-        .kl-footer { padding: 48px 16px 32px !important; }
-        .kl-footer-top { flex-direction: column !important; gap: 32px !important; }
-        .kl-platforms { padding: 16px !important; gap: 16px !important; }
+        .kl-hero { padding: 32px 16px 0 !important; gap: 24px !important; }
+        .kl-hero-h1 { font-size: 32px !important; letter-spacing:-1.5px !important; }
+        .kl-hero-sub { font-size: 15px !important; max-width: 100% !important; margin-bottom:24px !important; }
+        .kl-hero-card { display: none !important; }
+        .kl-section { padding: 40px 16px !important; }
+        .kl-section-h2 { font-size: 28px !important; letter-spacing:-0.8px !important; }
+        .kl-section-sub { font-size: 15px !important; margin-bottom:32px !important; }
+        .kl-steps { grid-template-columns: 1fr !important; gap: 10px !important; }
+        .kl-step { padding: 20px 18px !important; }
+        .kl-step-num { font-size: 48px !important; }
+        .kl-dark-section { padding: 40px 16px !important; }
+        .kl-dark-inner { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+        .kl-dark-num { font-size: 32px !important; }
+        .kl-dark-label { font-size: 13px !important; }
+        .kl-pricing-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+        .kl-plan { padding: 24px 20px !important; }
+        .kl-plan-price { font-size: 38px !important; }
+        .kl-scan-wrap { padding: 40px 16px !important; }
+        .kl-scan-form-card { padding: 20px 16px !important; border-radius:14px !important; margin-top:20px !important; }
+        .kl-section-eyebrow { font-size: 11px !important; }
+        .kl-footer { padding: 40px 16px 28px !important; }
+        .kl-footer-top { flex-direction: column !important; gap: 28px !important; }
+        .kl-platforms { padding: 14px 16px !important; gap: 12px !important; flex-wrap: wrap !important; }
+        .kl-platform { font-size: 12px !important; }
         .block-container { padding: 0 !important; }
+        html, body { overflow-x: hidden !important; }
+        /* Form fields */
+        .stTextInput input { font-size: 16px !important; min-height: 46px !important; }
+        .stSelectbox > div > div { font-size: 16px !important; min-height: 46px !important; }
+        .stButton > button { min-height: 48px !important; font-size: 15px !important; }
     }
     @media (max-width: 480px) {
-        .kl-hero-h1 { font-size: 28px !important; }
-        .kl-dark-inner { grid-template-columns: 1fr !important; }
+        .kl-hero-h1 { font-size: 26px !important; letter-spacing:-1px !important; }
+        .kl-hero-sub { font-size: 14px !important; }
+        .kl-dark-inner { grid-template-columns: 1fr 1fr !important; }
+        .kl-section-h2 { font-size: 24px !important; }
     }
 
     /* ── FOOTER ── */
@@ -739,7 +748,7 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    _, form_col, _ = st.columns([1, 2, 1])
+    _, form_col, _ = st.columns([0.5, 3, 0.5])
     with form_col:
         st.markdown('<div class="kl-scan-form-card">', unsafe_allow_html=True)
         st.markdown("""
@@ -786,68 +795,6 @@ def render():
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # ── FREE SCAN ─────────────────────────────────────────────
-    st.markdown("""
-    <div class="kl-scan-wrap">
-        <div class="kl-scan-center">
-            <div class="kl-section-eyebrow">Free Piracy Scan</div>
-            <h2 class="kl-section-h2" style="font-size:42px;">
-                See who's stealing<br>your content right now.
-            </h2>
-            <p style="font-size:17px;color:#6B6B6B;line-height:1.6;font-weight:400;">
-                No credit card. No account needed.
-                Results in 60 seconds.
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    _, form_col, _ = st.columns([1, 2, 1])
-    with form_col:
-        st.markdown('<div class="kl-scan-form-card">', unsafe_allow_html=True)
-        st.markdown("""
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;
-             font-size:22px;font-weight:900;color:#111111;
-             letter-spacing:-0.5px;margin-bottom:28px;">
-            Run your free scan
-        </div>""", unsafe_allow_html=True)
-
-        st.markdown('<span class="kl-field-label">Your name</span>',
-                    unsafe_allow_html=True)
-        name = st.text_input("n", placeholder="e.g. Kunle Afolayan",
-                             label_visibility="collapsed", key="scan_name2")
-
-        st.markdown('<span class="kl-field-label">Email address</span>',
-                    unsafe_allow_html=True)
-        email = st.text_input("e", placeholder="you@email.com",
-                              label_visibility="collapsed", key="scan_email2")
-
-        st.markdown('<span class="kl-field-label">Content title</span>',
-                    unsafe_allow_html=True)
-        content_title = st.text_input("c",
-            placeholder="e.g. Living In Bondage, Essence",
-            label_visibility="collapsed", key="scan_title2")
-
-        st.markdown('<span class="kl-field-label">Content type</span>',
-                    unsafe_allow_html=True)
-        content_type = st.selectbox("t",
-            ["Movie / Film", "Music Track", "YouTube Video",
-             "Podcast", "Album", "Short Film", "Other"],
-            label_visibility="collapsed", key="scan_type2")
-
-        st.markdown("<div style='margin-top:28px;'></div>",
-                    unsafe_allow_html=True)
-
-        if st.button("Scan my content for free →", key="run_scan2"):
-            if not name or not email or not content_title:
-                st.error("Please fill in all fields.")
-            else:
-                _save_scan_lead(name, email, content_title, content_type)
-                st.markdown('</div>', unsafe_allow_html=True)
-                _show_scan_results(content_title)
-                return
-
-        st.markdown('</div>', unsafe_allow_html=True)
 
     # ── PRICING ───────────────────────────────────────────────
     st.markdown("""
