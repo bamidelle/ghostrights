@@ -561,24 +561,55 @@ def render():
     </style>
     """, unsafe_allow_html=True)
 
-    # ── NAV ───────────────────────────────────────────────────
-    nav1, nav2, nav3, nav4, nav5 = st.columns([3, 1.2, 1, 1.2, 1.5])
-    with nav1:
-        st.markdown('<div class="kl-logo" style="padding:18px 0 12px;">👻 GhostRights</div>',
-                    unsafe_allow_html=True)
-    with nav2:
-        st.markdown('<div style="padding-top:14px;"><a class="kl-nav-link" href="#how-it-works">How It Works</a></div>',
-                    unsafe_allow_html=True)
-    with nav3:
-        st.markdown('<div style="padding-top:14px;"><a class="kl-nav-link" href="#pricing">Pricing</a></div>',
-                    unsafe_allow_html=True)
-    with nav4:
-        if st.button("Log in →", key="nav_login"):
-            st.session_state.current_page = "login"
-            st.rerun()
-    with nav5:
-        if st.button("🔍 Free scan", key="nav_free_scan"):
-            st.session_state.current_page = "free_scan"
+    # ── NAV (pure HTML — no Streamlit columns, no vertical stacking on mobile) ──
+    st.markdown("""
+    <nav class="kl-nav">
+        <div class="kl-logo">👻 GhostRights</div>
+        <div class="kl-nav-links">
+            <a class="kl-nav-link" href="#how-it-works">How It Works</a>
+            <a class="kl-nav-link" href="#pricing">Pricing</a>
+        </div>
+        <div class="kl-nav-right">
+            <a class="kl-btn-outline"
+               href="?page=login"
+               onclick="window.parent.postMessage({type:'streamlit:setComponentValue', value:'login'}, '*')">
+               Log in →
+            </a>
+            <a class="kl-btn-black"
+               href="?page=free_scan"
+               onclick="window.parent.postMessage({type:'streamlit:setComponentValue', value:'free_scan'}, '*')">
+               🔍 Free scan
+            </a>
+        </div>
+    </nav>
+    <script>
+    // Intercept nav link clicks and route via Streamlit session state
+    (function() {
+        function routeTo(page) {
+            const stDoc = window.parent.document;
+            // Set URL param so on reload it routes correctly
+            const url = new URL(window.parent.location);
+            url.searchParams.set('page', page);
+            window.parent.history.pushState({}, '', url);
+        }
+        document.querySelectorAll('a[href^="?page="]').forEach(function(a) {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = new URLSearchParams(this.getAttribute('href').slice(1)).get('page');
+                routeTo(page);
+            });
+        });
+    })();
+    </script>
+    """, unsafe_allow_html=True)
+
+    # Handle nav routing via query params
+    params = st.query_params
+    if "page" in params:
+        p = params["page"]
+        if p in ("login", "signup", "dashboard", "free_scan"):
+            st.session_state.current_page = p
+            st.query_params.clear()
             st.rerun()
 
     # ── HERO ──────────────────────────────────────────────────
@@ -597,8 +628,9 @@ def render():
                 music, and videos — then makes pirates pay you,
                 or destroys them. Automatically.
             </p>
-            <div class="kl-hero-ctas" id="hero-ctas">
-                <span id="hero-cta-placeholder"></span>
+            <div class="kl-hero-ctas">
+                <a class="kl-cta-black" href="?page=free_scan">🔍 Get a free scan →</a>
+                <a class="kl-cta-text" href="?page=signup">Create free account</a>
             </div>
             <div class="kl-hero-trust">
                 <div class="kl-avatars">
@@ -657,18 +689,7 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    # ── HERO CTA BUTTONS (real Streamlit) ─────────────────────
-    _, hero_c1, hero_c2, _ = st.columns([1, 2, 2, 1])
-    with hero_c1:
-        if st.button("🔍 Get a free scan →", key="hero_free_scan",
-                     use_container_width=True):
-            st.session_state.current_page = "free_scan"
-            st.rerun()
-    with hero_c2:
-        if st.button("Create free account", key="hero_signup",
-                     use_container_width=True):
-            st.session_state.current_page = "signup"
-            st.rerun()
+    # ── HERO CTA BUTTONS (pure HTML — no column stacking on mobile) ──────────
 
     # ── HOW IT WORKS ──────────────────────────────────────────
     st.markdown("""
