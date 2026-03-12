@@ -723,66 +723,7 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    # ── FREE SCAN ─────────────────────────────────────────────
-    st.markdown("""
-    <div class="kl-scan-wrap">
-        <div class="kl-scan-center">
-            <div class="kl-section-eyebrow">Free Piracy Scan</div>
-            <h2 class="kl-section-h2" style="font-size:42px;">
-                See who's stealing<br>your content right now.
-            </h2>
-            <p style="font-size:17px;color:#6B6B6B;line-height:1.6;font-weight:400;">
-                No credit card. No account needed.
-                Results in 60 seconds.
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    _, form_col, _ = st.columns([1, 2, 1])
-    with form_col:
-        st.markdown('<div class="kl-scan-form-card">', unsafe_allow_html=True)
-        st.markdown("""
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;
-             font-size:22px;font-weight:900;color:#111111;
-             letter-spacing:-0.5px;margin-bottom:28px;">
-            Run your free scan
-        </div>""", unsafe_allow_html=True)
-
-        st.markdown('<span class="kl-field-label">Your name</span>',
-                    unsafe_allow_html=True)
-        name = st.text_input("n", placeholder="e.g. Kunle Afolayan",
-                             label_visibility="collapsed", key="scan_name")
-
-        st.markdown('<span class="kl-field-label">Email address</span>',
-                    unsafe_allow_html=True)
-        email = st.text_input("e", placeholder="you@email.com",
-                              label_visibility="collapsed", key="scan_email")
-
-        st.markdown('<span class="kl-field-label">Content title</span>',
-                    unsafe_allow_html=True)
-        content_title = st.text_input("c",
-            placeholder="e.g. Living In Bondage, Essence",
-            label_visibility="collapsed", key="scan_title")
-
-        st.markdown('<span class="kl-field-label">Content type</span>',
-                    unsafe_allow_html=True)
-        content_type = st.selectbox("t",
-            ["Movie / Film", "Music Track", "YouTube Video",
-             "Podcast", "Album", "Short Film", "Other"],
-            label_visibility="collapsed", key="scan_type")
-
-        st.markdown("<div style='margin-top:28px;'></div>",
-                    unsafe_allow_html=True)
-
-        if st.button("Scan my content for free →", key="run_scan"):
-            if not name or not email or not content_title:
-                st.error("Please fill in all fields.")
-            else:
-                _save_scan_lead(name, email, content_title, content_type)
-                st.markdown('</div>', unsafe_allow_html=True)
-                _show_scan_results(content_title)
-                return
+   
 
         st.markdown('</div>', unsafe_allow_html=True)
 
