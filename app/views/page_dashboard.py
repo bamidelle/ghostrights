@@ -58,6 +58,19 @@ def render():
     .gr-notif-title { font-size:13px; font-weight:800; color:var(--ink); letter-spacing:-0.2px; margin-bottom:2px; }
     .gr-notif-body { font-size:12px; color:var(--grey); font-weight:500; line-height:1.5; }
     .gr-action-btn { display:inline-flex; align-items:center; gap:6px; background:var(--off); color:var(--ink); border:1.5px solid var(--border); border-radius:100px; padding:10px 18px; font-size:13px; font-weight:700; cursor:pointer; text-decoration:none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        .block-container { padding: 0 12px 24px !important; }
+        .gr-topbar { flex-direction:column !important; align-items:flex-start !important; gap:8px !important; padding:16px 0 12px !important; margin-bottom:16px !important; }
+        .gr-topbar-left h2 { font-size:20px !important; }
+        .gr-logo-inline { display:none !important; }
+        .gr-stat-card { padding:14px 16px !important; }
+        .gr-stat-value { font-size:26px !important; }
+        .gr-stat-label { font-size:10px !important; }
+        .gr-detection-item { flex-direction:column !important; align-items:flex-start !important; gap:8px !important; padding:12px 14px !important; }
+        .gr-badge-new, .gr-badge-ok { align-self:flex-start !important; }
+    }
     </style>
     """, unsafe_allow_html=True)
 
