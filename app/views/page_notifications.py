@@ -33,11 +33,14 @@ div[data-testid="stSidebar"] { background:#FFFFFF !important; border-right:1px s
 }
 .notif-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.06); }
 .notif-card.unread { border-left:4px solid #E8463A; background:#FFFCFC; }
-.notif-card.piracy_detected { border-left-color:#E8463A; }
-.notif-card.dmca_sent       { border-left-color:#1B4332; }
-.notif-card.payment_received { border-left-color:#4ADE80; }
+.notif-card.new_detection      { border-left-color:#E8463A; }
+.notif-card.takedown_success    { border-left-color:#1B4332; }
+.notif-card.takedown_failed     { border-left-color:#E8463A; }
+.notif-card.claim_active        { border-left-color:#4ADE80; }
+.notif-card.revenue_earned      { border-left-color:#4ADE80; }
 .notif-card.subscription_renewal { border-left-color:#4ADE80; }
-.notif-card.weekly_digest   { border-left-color:#6B6B6B; }
+.notif-card.report_ready        { border-left-color:#6B6B6B; }
+.notif-card.system_alert        { border-left-color:#9B9B9B; }
 
 .notif-icon { font-size:24px; flex-shrink:0; margin-top:2px; }
 .notif-title { font-size:14px; font-weight:800; color:#111111; letter-spacing:-0.2px; margin-bottom:3px; }
@@ -77,13 +80,16 @@ div[data-testid="stSidebar"] { background:#FFFFFF !important; border-right:1px s
 """
 
 NOTIF_ICONS = {
-    "piracy_detected":     "🚨",
-    "dmca_sent":           "⚔️",
-    "payment_received":    "💳",
-    "subscription_renewal":"✅",
-    "weekly_digest":       "📊",
-    "takedown_success":    "🎯",
-    "default":             "🔔",
+    "new_detection":        "🚨",
+    "takedown_success":     "⚔️",
+    "takedown_failed":      "❌",
+    "claim_active":         "💰",
+    "revenue_earned":       "💰",
+    "subscription_renewal": "✅",
+    "subscription_expiring":"⚠️",
+    "report_ready":         "📊",
+    "system_alert":         "🛡",
+    "default":              "🔔",
 }
 
 
